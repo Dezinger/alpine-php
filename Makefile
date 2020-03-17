@@ -26,7 +26,7 @@ build-all: ## Build all images
 	make build-73
 
 push-73: ## Push built PHP 7.3 images to Docker Hub
-    @docker push ${DOCKER_ID_USER}/${IMAGE_NAME}:7.3-cli
+	@docker push ${DOCKER_ID_USER}/${IMAGE_NAME}:7.3-cli
 	@docker push ${DOCKER_ID_USER}/${IMAGE_NAME}:7.3-fpm
 	@docker push ${DOCKER_ID_USER}/${IMAGE_NAME}:7.3-apache
 	@docker tag ${DOCKER_ID_USER}/${IMAGE_NAME}:7.3-cli ${DOCKER_ID_USER}/${IMAGE_NAME}:7.3
