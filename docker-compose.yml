@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+
+  apache:
+    image: dezinger/alpine-php:7.3-apache
+    ports:
+      - "80:80"
