@@ -45,6 +45,9 @@ build-and-push: ## Build all images and push them to Docker Hub
 	make build-all
 	make push-all
 
+all: ## Alias build-and-push
+	make build-and-push
+
 clean: ## Clean all containers and images on the system
 	-@docker ps -a -q | xargs docker rm -f
 	-@docker images -q | xargs docker rmi -f
