@@ -9,15 +9,16 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vendor="dezinger" \
       org.label-schema.name="docker-alpine-php" \
-      org.label-schema.description="Docker image with PHP CLI 7.3, additional PHP extensions, and Alpine" \
+      org.label-schema.description="Docker image with PHP CLI 7.3, additional PHP extensions and Alpine" \
       org.label-schema.url="https://github.com/dezinger/docker-alpine-php"
 
 ARG WEB_DOCUMENT_ROOT="/var/www"
-ARG COMPOSER_VER="1.9.3"
+ARG COMPOSER_VER="1.10.6"
 
 ENV \
     COMPOSER_ALLOW_SUPERUSER="1" \
     COMPOSER_HOME="/tmp/composer" \
+    PHP_SESSION_SAVE_PATH="/var/lib/php/session" \
 # Color console
     PS1='\[\033[1;32m\]\[\033[1;36m\][\u@\h] \[\033[1;34m\]\w\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'
 
@@ -33,6 +34,7 @@ RUN set -eux; \
 RUN set -xe \
 # Install packages
     && apk --no-cache add \
+        bash \
         php7 \
         php7-json \
         php7-openssl \
@@ -83,8 +85,8 @@ RUN set -xe \
 # Clean
     && rm -rf ${WEB_DOCUMENT_ROOT} /home/user ${COMPOSER_HOME} /var/cache/apk/* \
 # Prepare folders
-    && mkdir ${WEB_DOCUMENT_ROOT} /home/user ${COMPOSER_HOME} \
-    && chown www-data:www-data ${WEB_DOCUMENT_ROOT}
+    && mkdir -p ${WEB_DOCUMENT_ROOT} /home/user ${COMPOSER_HOME} ${PHP_SESSION_SAVE_PATH} \
+    && chown www-data:www-data ${WEB_DOCUMENT_ROOT} ${PHP_SESSION_SAVE_PATH}
 
 COPY tags/cli /
 
@@ -97,4 +99,5 @@ RUN set -xe \
 
 VOLUME ["$WEB_DOCUMENT_ROOT"]
 
+ENTRYPOINT ["/bin/bash", "-e", "/init/entrypoint"]
 CMD ["php", "-a"]

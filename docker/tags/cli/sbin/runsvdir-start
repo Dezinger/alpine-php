@@ -2,4 +2,5 @@
 
 export PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
+# http://smarden.org/runit/runscripts.html
 exec runsvdir -P /etc/service

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "Setup Composer"
+
+export COMPOSER_GITHUB_OAUTH_KEY=${COMPOSER_GITHUB_OAUTH_KEY:-"none"}
+composer config -a -g github-oauth.github.com ${COMPOSER_GITHUB_OAUTH_KEY}
